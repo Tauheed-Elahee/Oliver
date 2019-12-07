@@ -5,7 +5,7 @@ import serial
 ser = serial.Serial(
     port="COM4",
     baudrate=115200
-    )
+)
 
 
 def get_bpm(data_raw):

@@ -76,5 +76,15 @@
     </form>
 </div>
 
+
+<script src="https://code.jquery.com/jquery-3.2.1.js"></script>
+<div id="content">{{ system_info }}</div> {# this is the original system_info passed in from the root view #}
+
+<script>
+setInterval(function(){ // load the data from your endpoint into the div
+    $("#content").load("/sys_info.json")
+},1000)
+</script>
+
 </body>
 </html>

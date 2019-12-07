@@ -1,9 +1,12 @@
 import json
 from flask import Flask, request, redirect, g, render_template, session, url_for
+from flask_apscheduler import APScheduler
 from flask_session import Session
 import requests
 from urllib.parse import quote
+import time
 import uuid
+import serial
 import os
 
 # Authentication Steps, paramaters, and responses are defined at https://developer.spotify.com/web-api/authorization-guide/
@@ -11,11 +14,15 @@ import os
 
 
 app = Flask(__name__)
+scheduler = APScheduler()
+scheduler.init_app(app)
+scheduler.start()
 app.secret_key = os.environ.get("SESSION_KEY")
 app.config['SESSION_TYPE'] = 'filesystem'
 
 Session(app)
 
+bpm = 0
 
 #  Client Keys
 CLIENT_ID = os.environ.get("SPOTIFY_CLIENT_ID")
@@ -108,6 +115,27 @@ def callback():
     return redirect(url_for('dashboard'))
 
 
+@app.route("/sys_info.json")
+def system_info():  # you need an endpoint on the server that returns your info...
+    global bpm
+    bpm_json = {'bpm': str(bpm)}
+    return bpm_json
+
+
+def print_test():
+    global bpm
+    ser = serial.Serial(
+        port="COM4",
+        baudrate=115200
+    )
+    while True:
+        data_raw = ser.readline().decode().strip()
+        if data_raw:
+            data = data_raw.split(",")
+            if int(data[0]) > 0:
+                bpm = int(data[0])
+
+
 @app.route("/dashboard")
 def dashboard():
     if not session.get('token'):
@@ -117,6 +145,7 @@ def dashboard():
 
 @app.route("/play", methods=['GET', 'POST'])
 def play_track():
+    app.apscheduler.add_job(func=print_test, trigger='date', id=str('test'))
     authorization_header = {"Authorization": "Bearer {}".format(session['token'])}
     device_list = json.loads(requests.get(
         'https://api.spotify.com/v1/me/player/devices',
