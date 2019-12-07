@@ -1,3 +1,5 @@
 #ignore KDE files
 build/**
 **.kde**
+**flask_session/**
+**.idea/**
