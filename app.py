@@ -53,6 +53,11 @@ auth_query_parameters = {
 def index():
     # Auth Step 1: Authorization
     session["state"] = str(uuid.uuid4())
+    return render_template('index.html')
+
+
+@app.route('/authorize')
+def authorize():
     url_args = "&".join(["{}={}".format(key, quote(val)) for key, val in auth_query_parameters.items()])
     auth_url = "{}/?{}".format(SPOTIFY_AUTH_URL, url_args)
     return redirect(auth_url)
@@ -122,6 +127,7 @@ def play_track():
             player_api_endpoint = "{}/me/player".format(SPOTIFY_API_URL)
             payload = {
                 'device_ids': [device['id']],
+                'play': 'True'
             }
             if not device['is_active']:
                 print('Activating Device')
@@ -130,11 +136,12 @@ def play_track():
                     headers=authorization_header,
                     json=payload
                 )
-            play_api_endpoint = "{}/me/player/play".format(SPOTIFY_API_URL)
-            requests.put(
-                play_api_endpoint,
-                headers=authorization_header,
-            )
+            else:
+                play_api_endpoint = "{}/me/player/play".format(SPOTIFY_API_URL)
+                requests.put(
+                    play_api_endpoint,
+                    headers=authorization_header,
+                )
             print("Playing Now!")
             return "Nothing"
 
@@ -154,6 +161,7 @@ def pause_track():
             player_api_endpoint = "{}/me/player".format(SPOTIFY_API_URL)
             payload = {
                 'device_ids': [device['id']],
+                'play': 'false'
             }
             if not device['is_active']:
                 print('Activating Device')
@@ -162,11 +170,12 @@ def pause_track():
                     headers=authorization_header,
                     json=payload
                 )
-            play_api_endpoint = "{}/me/player/pause".format(SPOTIFY_API_URL)
-            requests.put(
-                play_api_endpoint,
-                headers=authorization_header,
-            )
+            else:
+                play_api_endpoint = "{}/me/player/pause".format(SPOTIFY_API_URL)
+                requests.put(
+                    play_api_endpoint,
+                    headers=authorization_header,
+                )
             print("Paused!")
             return "Nothing"
 
