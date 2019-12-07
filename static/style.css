@@ -89,8 +89,9 @@ ul li a:hover{
 
 .bpm{
   position: absolute;
-  top: 70%;
+  top: 40%;
   left:50%;
+  font-size:50px;
   color: #fff;
   transform: translate(-50%, -50%);
 }
