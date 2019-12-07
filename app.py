@@ -117,9 +117,7 @@ def callback():
 
 @app.route("/sys_info.json")
 def system_info():  # you need an endpoint on the server that returns your info...
-    global bpm
-    bpm_json = {'bpm': str(bpm)}
-    return bpm_json
+    return str(bpm)
 
 
 def print_test():
