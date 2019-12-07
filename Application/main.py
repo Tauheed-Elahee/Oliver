@@ -22,3 +22,4 @@ try:
             print(bpm)
 except KeyboardInterrupt:
     ser.close()
+
