@@ -2,10 +2,27 @@
 <html>
 <head>
   <title>Spotify Web Playback SDK Quick Start Tutorial</title>
+    <link rel="stylesheet" href="../static/style.css">
 </head>
 <body>
-  <h1>Spotify Web Playback SDK Quick Start Tutorial</h1>
-  <h2>Open your console log: <code>View > Developer > JavaScript Console</code></h2>
+
+  <header>
+    <div class="main">
+      <div class="logo">
+        <img src="../static/one.png">
+
+      </div>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="https://github.com/Tauheed-Elahee/Oliver">GitHub</a></li>
+      </ul>
+
+    </div>
+   <div  class="bpm2">
+    <h1>Spotify Web Playback SDK Quick Start Tutorial</h1>
+     <h2>Open your console log: <code>View > Developer > JavaScript Console</code></h2>
+   </div>
 
   <script src="https://sdk.scdn.co/spotify-player.js"></script>
   <script>
@@ -51,11 +68,13 @@
     });
 </script>
 
-<div class='container'>
-    <form>
-        <a href=# id=play><button class='btn btn-default'>Play</button></a>
-    </form>
-</div>
+
+      <div class="button">
+        <a href=# id=play class="btn"><button >Play</button></a>
+       <a href=# id=pause class="btn"><button >Pause</button></a>
+       <a href=# id=nexttrack class="btn"><button >Next Track</button></a>
+      </div>
+
 
 
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
@@ -70,21 +89,16 @@
     });
 </script>
 
-<div class='container'>
-    <form>
-        <a href=# id=pause><button class='btn btn-default'>Pause</button></a>
-    </form>
-</div>
-
 
 <script src="https://code.jquery.com/jquery-3.2.1.js"></script>
-<div id="content">{{ system_info }}</div> {# this is the original system_info passed in from the root view #}
+
+<div id="content" class="bpm">{{ system_info }}</div>
 
 <script>
 setInterval(function(){ // load the data from your endpoint into the div
     $("#content").load("/sys_info.json")
 },1000)
 </script>
-
+  </header>
 </body>
 </html>
