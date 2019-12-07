@@ -76,8 +76,16 @@ ul li a:hover{
   font-size: 70px;
 }
 
-.titleabout h2{
+.titleabout2 h2{
   color: #fff;
+}
+
+.titleabout2{
+  position: absolute;
+  top: 40%;
+  left:51%;
+  transform: translate(-50%, -50%);
+  text-align: justify;
 }
 
 .button{
